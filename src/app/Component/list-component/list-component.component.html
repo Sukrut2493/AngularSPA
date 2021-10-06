@@ -1,0 +1,110 @@
+<div class="container">
+  <div class="row">
+    <div
+      class="col-4"
+      *ngFor="
+        let list of dummyListArray
+          | paginate: { itemsPerPage: 10, currentPage: p };
+        let i = index
+      "
+    >
+      <div class="cardCss">
+        <div style="text-align: center">
+          <img
+            class="card-img-top"
+            class="imageClass"
+            src="{{ list.thumbnailUrl }}"
+            alt="Card image"
+          />
+        </div>
+
+        <div class="card-body">
+          <h1 class="card-title">{{ list.title }}</h1>
+          <h2 class="card-text">{{ list.id }}</h2>
+          <h3 class="card-text" style="word-break: break-all !important">
+            {{ list.url }}
+          </h3>
+          <div style="text-align: center!important;">
+            <button
+            style="text-align: center !important"
+            type="button"
+            class="btn btn-primary"
+            *ngIf="list.isActive == true"
+            (click)="compare(list, list.id)"
+          >
+            Compare
+          </button>
+          <button
+            style="text-align: center !important"
+            type="button"
+            class="btn btn-primary"
+            *ngIf="list.isActive == false"
+            (click)="Remove(list.id)"
+          >
+            Remove
+          </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="text-align: center!important;font-size: 20px!important;">
+    <pagination-controls
+    (pageChange)="p = $event"
+    class="float-right"
+  ></pagination-controls>
+  </div>
+
+</div>
+
+<div *ngIf="tableListArray!==[]" >
+  <h1 style="text-align: center!important;">Table</h1>
+  <table style="margin-bottom: 20px!important;">
+    <tr>
+      <td>Photo</td>
+      <th>ID</th>
+      <th>URL</th>
+      <th>Title</th>
+      <th>Delete</th>
+    </tr>
+    <tr
+      *ngFor="
+        let list of tableListArray | paginate: { itemsPerPage: 5, currentPage: p1 } ;let i = index">
+      <td>
+        <img
+          class="card-img-top"
+          class="imageClass"
+          src="{{ list.thumbnailUrl }}"
+          alt="Card image"
+        />
+      </td>
+      <td>
+        <h5 class="card-title">{{ list.id }}</h5>
+      </td>
+      <td>
+        <p class="card-text" style="word-break: break-all !important">
+          {{ list.url }}
+        </p>
+      </td>
+      <td>
+        <p class="card-text">{{ list.title }}</p>
+      </td>
+      <td>
+        <button
+        style="text-align: center !important"
+        type="button"
+        class="btn btn-primary"
+        (click)="Remove(list.id)"
+      >
+        Remove
+      </button>
+      </td>
+    </tr>
+  </table>
+</div>
+<div style="text-align: center!important;font-size: 20px!important;">
+  <pagination-controls
+  (pageChange)="p1 = $event"
+  class="float-right"
+></pagination-controls>
+</div>
